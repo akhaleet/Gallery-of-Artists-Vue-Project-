@@ -5,9 +5,8 @@
 
       <nav>
         <ul>
-          <li class="bezDropdownaPocetna"><router-link to="/">Početna</router-link></li>
-          <li class="dropdown">
-                <a href="#" class="hoverUmetnine">Umjetnine</a>
+          <li class="bezDropdownaPocetna"><router-link to="/pocetna">Početna</router-link></li>
+          <li class="dropdown"><router-link to="/umetnine">Umjetnine</router-link>
                 <ul class="dropdown-content">
                     <li><router-link to="/umetnine/slike">Slike</router-link></li>
                     <li><router-link to="/umetnine/skulpture">Skulpture</router-link></li>
@@ -17,6 +16,7 @@
           <li class="bezDropdowna"><router-link to="/umetnici">Umjetnici</router-link></li>
           <li class="bezDropdowna"><router-link to="/mojnalog">Moj Nalog</router-link></li>
           <li class="bezDropdowna"><router-link to="/onama">O nama</router-link></li>
+          <li class="bezDropdowna" style="color: red;"><router-link to="/">Odjavi se</router-link></li>
           <li class="bezDropdowna">
             <form id="forma" role="search">
             <input type="search" id="query" name="q"

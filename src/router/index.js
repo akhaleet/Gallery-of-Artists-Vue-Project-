@@ -7,14 +7,15 @@ import Onama from '../views/Onama.vue'
 import Slike from '../views/Slike.vue'
 import Skulpture from '../views/Skulpture.vue'
 import Ostalo from '../views/Ostalo.vue'
+import Login from '../views/Login.vue'
 
 
 const routes = [
   {
     path: '/',
-    name: 'Pocetna',
-    meta: { title: 'Početna' },
-    component: Pocetna,
+    name: 'Login',
+    meta: { title: 'Login/Register' },
+    component: Login,
     
   },
   {
@@ -60,6 +61,13 @@ const routes = [
     name: 'Onama',
     component: Onama,
     meta: { title: 'O nama' },
+  },
+  {
+    path: '/pocetna',
+    name: 'Pocetna',
+    meta: { title: 'Početna' },
+    component: Pocetna,
+    
   }
   
 ]

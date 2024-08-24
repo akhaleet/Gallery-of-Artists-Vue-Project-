@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-  <Navigacija />
+  <Navigacija v-if="!isLoginPage" />
   <Footer />
   <router-view />
 </div>
@@ -35,9 +35,24 @@ import Navigacija from './components/Navigacija.vue';
 import Footer from './components/Footer.vue';
 
 export default {
+
+  head: {
+       link: [
+             {
+                 rel: "icon",
+                 href: require("./assets/logo.png")
+             },
+          ]
+       },
+
   components: {
     Navigacija,
     Footer
   },
+  computed: {
+    isLoginPage() {
+      return this.$route.name === 'Login'; 
+    }
+  }
 };
 </script>
