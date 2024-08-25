@@ -22,26 +22,29 @@
     data(){
       return {
         informacijeNiz: [],
+        korisnikPodaci: [],
 
       }
     },
     methods: {
-      prikaziInformacije(){
-        let cuvajNiz = localStorage.getItem('informacijeNiz');
+    prikaziInformacije() {
+      let ulogovan = JSON.parse(localStorage.getItem('loggedIn'));
+      if (ulogovan) {
+        let korisnikInfoKey = `korpa_${ulogovan.username}`;
+        let cuvajNiz = localStorage.getItem(korisnikInfoKey);
+        
         if (cuvajNiz) {
-  
           this.informacijeNiz = JSON.parse(cuvajNiz);
         } else {
-        
           this.informacijeNiz = [];
         }
-      }
-    },
-    created() {
-    this.prikaziInformacije(); 
+      } 
     }
+  },
+  created() {
+    this.prikaziInformacije();
   }
-
+};
 
 </script>
 

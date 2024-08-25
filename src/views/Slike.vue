@@ -136,15 +136,9 @@ export default {
       user: null,
       trenutniNaziv: '',
       umjetnickaDjela: [
-        {
-          naziv: 'Mona Liza',
-        },
-        {
-          naziv: 'Zvezdana noć',
-        },
-        {
-          naziv: 'Tajna večera',
-        }
+        {naziv: 'Mona Liza',},
+        {naziv: 'Zvezdana noć',},
+        {naziv: 'Tajna večera',}
       ],
       informacijeNiz: [], 
     };
@@ -167,17 +161,27 @@ export default {
           "Za djelo: " + this.trenutniNaziv
         );
 
+        let korisnikInfoKey = `korpa_${this.user.username}`;
+        let korisnikPodaci = JSON.parse(localStorage.getItem(korisnikInfoKey)) || [];
 
-        this.informacijeNiz.push({
+        korisnikPodaci.push({
           ponuda: this.ponuda,
           komentar: this.komentar,
           username: this.user.username,
           trenutniNaziv: this.trenutniNaziv
         });
 
-        console.log(this.informacijeNiz);
+        localStorage.setItem(korisnikInfoKey, JSON.stringify(korisnikPodaci));
 
-        localStorage.setItem('informacijeNiz', JSON.stringify(this.informacijeNiz));
+        let svePonude = JSON.parse(localStorage.getItem('svePonude')) || [];
+        svePonude.push({
+        ponuda: this.ponuda,
+        komentar: this.komentar,
+        username: this.user.username,
+        trenutniNaziv: this.trenutniNaziv
+        });
+        localStorage.setItem('svePonude', JSON.stringify(svePonude));
+
 
         this.ponuda = '';
         this.komentar = '';
@@ -187,29 +191,50 @@ export default {
       }
     },
     provjeriKorpu(){
-      let provjera = localStorage.getItem('informacijeNiz');
-      if (provjera){
-        alert(provjera);
+      let ulogovan = JSON.parse(localStorage.getItem('loggedIn'));
+      if(ulogovan) {
+        let korisnikInfoKey = `korpa_${ulogovan.username}`;
+        let korisnikPodaci = JSON.parse(localStorage.getItem(korisnikInfoKey)) || [];
+      if (korisnikPodaci.length){
+        alert(JSON.stringify(korisnikPodaci, null, 2));
       }
+      
       else {
         alert('Korpa je prazna!')
       }
-      
-
+    
+    }
     },
-    isprazniKorpu(){
-      localStorage.removeItem('informacijeNiz');
-      this.informacijeNiz = [];
-      console.log(this.informacijeNiz)
+    isprazniKorpu() {
+      let ulogovan = JSON.parse(localStorage.getItem('loggedIn'));
+      if (ulogovan) {
 
+        let korisnikInfoKey = `korpa_${ulogovan.username}`;
+        let svePonude = JSON.parse(localStorage.getItem('svePonude')) || [];
+        svePonude = svePonude.filter(p => p.username !== ulogovan.username);
+        localStorage.setItem('svePonude', JSON.stringify(svePonude));
+        localStorage.removeItem(korisnikInfoKey);
+        this.informacijeNiz = [];
+        console.log(this.informacijeNiz);
+
+      } else {
+        alert("Nema ulogovanog korisnika. Molimo ulogujte se.");
+        this.$router.push('/');
+      }
     }
   },
-  created(){
-    let cuvajNiz = localStorage.getItem('informacijeNiz');
-    if (cuvajNiz) {
-      this.informacijeNiz = JSON.parse(cuvajNiz);
+  created() {
+    let ulogovan = JSON.parse(localStorage.getItem('loggedIn'));
+    if (ulogovan) {
+      let korisnikInfoKey = `korpa_${ulogovan.username}`;
+      let cuvajNiz = localStorage.getItem(korisnikInfoKey);
+      if (cuvajNiz) {
+        this.informacijeNiz = JSON.parse(cuvajNiz);
+      }
+      else {
+        this.informacijeNiz = [];
+      }
     }
-    localStorage.setItem('cuvajNiz', cuvajNiz);
   }
 };
 </script>

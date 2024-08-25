@@ -1,8 +1,7 @@
 <template>
-  
-
 
   <div class="pocetna" style="background-color: lightblue;">
+
       <h2 style="font-weight: bold; color: red; padding-top: 15px;">Poslednje 3 ponude:</h2>
       <hr>
       <div v-if="poslednjaTriElementa.length > 0">
@@ -13,6 +12,9 @@
         <p style="font-weight: bold;">Djelo: {{ item.trenutniNaziv }}</p>
         <hr>
       </div>
+    </div>
+    <div v-else>
+      <p>Trenutno nema ponuda.</p>
     </div>
     </div>
 </template>
@@ -51,11 +53,11 @@ body {
     },
     methods: {
       prikaziInformacije(){
-        let cuvajNiz = localStorage.getItem('informacijeNiz');
+        let svePonude = localStorage.getItem('svePonude');
 
-        if (cuvajNiz) {
+        if (svePonude) {
   
-          this.informacijeNiz = JSON.parse(cuvajNiz);
+          this.informacijeNiz = JSON.parse(svePonude);
         } else {
         
           this.informacijeNiz = [];
@@ -66,7 +68,7 @@ body {
     this.prikaziInformacije(); 
     }
 
-  }
+  };
 
 
 
